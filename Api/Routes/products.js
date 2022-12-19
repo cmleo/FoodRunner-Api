@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Product = require('../Models/Product');
 
 // Get all products
 router.get('/', (req, res) => {
@@ -23,3 +24,5 @@ router.post('/', (req, res) => {
 		}
 	});
 });
+
+module.exports = router;
