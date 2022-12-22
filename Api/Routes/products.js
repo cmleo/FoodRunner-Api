@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Product = require('../Models/Product');
+const checkAuth = require('../Middlewares/check-auth');
 
 // Get all products
 router.get('/', (req, res, next) => {
@@ -19,7 +20,7 @@ router.get('/', (req, res, next) => {
 });
 
 // Create a new product
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
 	const product = new Product({
 		_id: new mongoose.Types.ObjectId(),
 		name: req.body.name,
@@ -30,7 +31,7 @@ router.post('/', (req, res, next) => {
 		.save()
 		.then((result) => {
 			res.status(201).json({
-				message: 'Handling POST requests to /products',
+				message: 'Created product successfully',
 				createdProduct: result,
 			});
 		})
