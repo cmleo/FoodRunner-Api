@@ -1,6 +1,0 @@
-{
-	"env": {
-		"MONGODB_URL": "mongodb+srv://cmleo:cmleo123@cluster0.fmaydcc.mongodb.net/?retryWrites=true&w=majority",
-		"JWT_KEY": "secret"
-	}
-}
