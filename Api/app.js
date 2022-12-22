@@ -13,7 +13,7 @@ app.use(express.urlencoded());
 app.use('/products', productRoutes);
 app.use('/user', userRoutes);
 
-mongoose.connect('mongodb+srv://cmleo:cmleo123@cluster0.fmaydcc.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
