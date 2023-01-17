@@ -7,6 +7,11 @@ dotenv.config();
 const productRoutes = require('./Routes/products');
 const userRoutes = require('./Routes/users');
 
+mongoose.connect(process.env.MONGODB_URL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
+
 // ExpressMiddlewares
 app.use(express.json());
 app.use(express.urlencoded());
@@ -14,10 +19,5 @@ app.use(express.urlencoded());
 // AppMiddlewares
 app.use('/products', productRoutes);
 app.use('/user', userRoutes);
-
-mongoose.connect(process.env.MONGODB_URL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
 
 module.exports = app;
