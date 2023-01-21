@@ -26,4 +26,4 @@ Installs all dependencies
 
 ### `npm start`
 
-Runs the API within a local, development server : [http://localhost:3000](http://localhost:3000) .\
+Runs the API within a local, development server : [http://localhost:3000](http://localhost:3000) .
