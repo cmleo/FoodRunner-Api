@@ -18,7 +18,7 @@ In the project directory, you must run:
 
 # 1 
 
-### `npm install` or ### `npm i`
+### `npm install` or `npm i`
 
 Installs all dependencies 
 
