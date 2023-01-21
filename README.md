@@ -16,13 +16,13 @@ To start the API:
 
 In the project directory, you must run:
 
-#1 
+# 1 
 
 ### `npm install` or ### `npm i`
 
 Installs all dependencies 
 
-#2
+# 2
 
 ### `npm start`
 
