@@ -7,6 +7,30 @@
 	},
 	"item": [
 		{
+			"name": "http://localhost:3000/user/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"userName\",\r\n    \"email\": \"user@mail.com\",\r\n    \"password\": \"userPassword\",\r\n    \"phone\": \"userPhoneNumber\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/signup",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["user", "signup"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3000/user/login",
 			"request": {
 				"auth": {
@@ -33,62 +57,9 @@
 				"url": {
 					"raw": "http://localhost:3000/user/login",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"user",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:3000/user/signup",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"userName\",\r\n    \"email\": \"user@mail.com\",\r\n    \"password\": \"userPassword\",\r\n    \"phone\": \"userPhoneNumber\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/user/signup",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"user",
-						"signup"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:3000/products",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/products",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"products"
-					]
+					"path": ["user", "login"]
 				}
 			},
 			"response": []
@@ -101,14 +72,24 @@
 				"url": {
 					"raw": "http://localhost:3000/user/63a1adc92adfd85456ac0e21",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"user",
-						"63a1adc92adfd85456ac0e21"
-					]
+					"path": ["user", "63a1adc92adfd85456ac0e21"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["products"]
 				}
 			},
 			"response": []
@@ -120,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"name\": \"product name\",\r\n    \"description\": \"productdescription\",\r\n    \"price\": \"product price\"\r\n}",
+					"raw": "{    \r\n    \"name\": \"product name\",\r\n    \"description\": \"product description\",\r\n    \"price\": \"product price\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,13 +111,58 @@
 				"url": {
 					"raw": "http://localhost:3000/products",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"products"
+					"path": ["products"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQG1haWwuY29tIiwidXNlcklkIjoiNjNmM2U1MTE1MzA2MDkzMTQ2ZDkwYjZlIiwiaWF0IjoxNjc3MTg0OTMyLCJleHAiOjE2NzcxODg1MzJ9.1FRgu8U5UWkWMSDgp4xciVflImx4lTTkE3Vtb-sXM8U",
+							"type": "string"
+						}
 					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"restaurantName\": \"restaurant name\",\r\n    \"location\": \"restaurant location\",\r\n    \"menu\": [\r\n        {\r\n            \"productName\": \"product name\",\r\n            \"description\": \"product description\",\r\n            \"price\": 0 \r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/restaurants",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants"]
 				}
 			},
 			"response": []
@@ -150,18 +176,14 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		}
 	]
