@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const productRoutes = require('./Routes/products');
+const restaurantRoutes = require('./Routes/restaurants');
 const userRoutes = require('./Routes/users');
 
 mongoose.connect(process.env.MONGODB_URL, {
@@ -18,6 +19,7 @@ app.use(express.urlencoded());
 
 // AppMiddlewares
 app.use('/products', productRoutes);
+app.use('/restaurants', restaurantRoutes);
 app.use('/user', userRoutes);
 
 module.exports = app;
