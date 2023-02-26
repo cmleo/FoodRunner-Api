@@ -21,17 +21,20 @@ router.get('/', (req, res, next) => {
 
 // Create a new restaurant
 router.post('/', checkAuth, (req, res, next) => {
+	const menuItems = req.body.menu.map((menuItem) => {
+		return {
+			productName: menuItem.productName,
+			description: menuItem.description,
+			price: menuItem.price,
+		};
+	});
+
 	const restaurant = new Restaurant({
 		restaurantName: req.body.restaurantName,
 		location: req.body.location,
-		menu: [
-			{
-				productName: req.body.productName,
-				description: req.body.description,
-				price: req.body.price,
-			},
-		],
+		menu: menuItems,
 	});
+
 	restaurant
 		.save()
 		.then((result) => {
