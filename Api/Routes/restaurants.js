@@ -46,7 +46,6 @@ router.post('/', checkAuth, (req, res, next) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
-				console: console.log(req.body),
 			});
 		});
 });
