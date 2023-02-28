@@ -50,4 +50,22 @@ router.post('/', checkAuth, (req, res, next) => {
 		});
 });
 
+// Delete a specific restaurant
+router.delete('/:restaurantId', checkAuth, (req, res, next) => {
+	Restaurant.remove({ _id: req.params.restaurantId })
+		.exec()
+		.then((result) => {
+			res.status(200).json({
+				message: 'Restaurant deleted',
+				result: result,
+			});
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
+
 module.exports = router;
