@@ -2,14 +2,34 @@ const mongoose = require('mongoose');
 
 // Define schema and model for restaurants
 const restaurantSchema = new mongoose.Schema({
-	name: { type: String, required: true },
-	location: { type: String, required: true },
+	restaurantName: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+	location: {
+		type: String,
+		required: true,
+	},
 	menu: [
 		{
-			product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-			name: { type: String, required: true },
-			description: { type: String, required: true },
-			price: { type: Number, required: true },
+			productName: {
+				type: String,
+				required: true,
+				unique: true,
+			},
+			description: {
+				type: String,
+				required: true,
+				unique: true,
+			},
+			price: {
+				type: Number,
+				required: true,
+			},
+			image: {
+				type: String,
+			},
 		},
 	],
 });
