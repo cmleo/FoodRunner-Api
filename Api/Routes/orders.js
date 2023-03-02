@@ -41,7 +41,6 @@ router.get('/', checkAuth, (req, res) => {
 		.sort({ timestamp: -1 })
 		.exec()
 		.then((docs) => {
-			console.log(userId);
 			res.status(200).json(docs);
 		})
 		.catch((err) => {
