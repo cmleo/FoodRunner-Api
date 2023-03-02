@@ -22,12 +22,6 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
-	orders: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Order',
-		},
-	],
 });
 const User = mongoose.model('User', userSchema);
 
