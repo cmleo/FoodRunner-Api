@@ -37,10 +37,10 @@ router.post('/', checkAuth, (req, res, next) => {
 
 	restaurant
 		.save()
-		.then((result) => {
+		.then((savedRestaurant) => {
 			res.status(201).json({
 				message: 'Created restaurant successfully',
-				createdRestaurant: result,
+				createdRestaurant: savedRestaurant,
 			});
 		})
 		.catch((err) => {
@@ -50,7 +50,7 @@ router.post('/', checkAuth, (req, res, next) => {
 		});
 });
 
-// Delete a specific restaurant
+// Delete restaurant by id
 router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 	Restaurant.remove({ _id: req.params.restaurantId })
 		.exec()
