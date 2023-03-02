@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const restaurantRoutes = require('./Routes/restaurants');
 const userRoutes = require('./Routes/users');
+const restaurantRoutes = require('./Routes/restaurants');
+const orderRoutes = require('./Routes/orders');
 
 mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
@@ -17,7 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 // AppMiddlewares
-app.use('/restaurants', restaurantRoutes);
 app.use('/user', userRoutes);
+app.use('/restaurants', restaurantRoutes);
+app.use('/orders', orderRoutes);
 
 module.exports = app;
