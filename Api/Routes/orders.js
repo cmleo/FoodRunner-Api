@@ -4,7 +4,7 @@ const router = express.Router();
 const checkAuth = require('../Middlewares/check-auth');
 const Order = require('../Models/Order');
 
-// POST route to add order to authenticated user
+// Add order to authenticated user
 router.post('/', checkAuth, (req, res) => {
 	const orderItems = req.body.order.map((orderItem) => {
 		return {
@@ -25,6 +25,24 @@ router.post('/', checkAuth, (req, res) => {
 		.save()
 		.then((savedOrder) => {
 			res.status(201).json(savedOrder);
+		})
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
+
+// Get all orders for authenticated user in descending order
+router.get('/', checkAuth, (req, res) => {
+	const userId = req.userData.userId;
+
+	Order.find({ user: userId })
+		.sort({ timestamp: -1 })
+		.exec()
+		.then((docs) => {
+			console.log(userId);
+			res.status(200).json(docs);
 		})
 		.catch((err) => {
 			res.status(500).json({
