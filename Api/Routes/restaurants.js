@@ -68,4 +68,40 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 		});
 });
 
+// Update a restaurant by id
+router.patch('/:restaurantId', (req, res) => {
+	const restaurantId = req.params.restaurantId;
+
+	const menuItems = req.body.menu.map((menuItem) => {
+		return {
+			productName: menuItem.productName,
+			description: menuItem.description,
+			price: menuItem.price,
+		};
+	});
+
+	Restaurant.updateOne(
+		{ _id: restaurantId },
+		{
+			$set: {
+				restaurantName: req.body.restaurantName,
+				location: req.body.location,
+				menu: menuItems,
+			},
+		}
+	)
+		.exec()
+		.then((updatedRestaurant) => {
+			res.status(200).json({
+				message: 'Updated restaurant successfully',
+				updatedRestaurant: updatedRestaurant,
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
+
 module.exports = router;
