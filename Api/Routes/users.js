@@ -97,8 +97,11 @@ router.post('/login', (req, res, next) => {
 		});
 });
 
-router.delete('/:userId', (req, res, next) => {
-	User.remove({ _id: req.params.userId })
+// Delete the authenticated user
+router.delete('/:userId', checkAuth, (req, res, next) => {
+	const userId = req.userData.userId;
+
+	User.remove({ _id: userId })
 		.exec()
 		.then((result) => {
 			res.status(200).json({
@@ -129,5 +132,7 @@ router.get('/', checkAuth, (req, res) => {
 			});
 		});
 });
+
+//
 
 module.exports = router;
