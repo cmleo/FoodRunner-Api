@@ -8,6 +8,7 @@ dotenv.config();
 
 const checkAuth = require('../Middlewares/check-auth');
 const User = require('../Models/User');
+const { update } = require('../Models/User');
 
 router.post('/signup', (req, res, next) => {
 	User.find({ email: req.body.email })
@@ -118,7 +119,7 @@ router.delete('/:userId', checkAuth, (req, res, next) => {
 });
 
 // Get the authenticated user
-router.get('/', checkAuth, (req, res) => {
+router.get('/', checkAuth, (req, res, next) => {
 	const userId = req.userData.userId;
 
 	User.find({ _id: userId })
@@ -133,6 +134,31 @@ router.get('/', checkAuth, (req, res) => {
 		});
 });
 
-//
+// Update user info
+router.patch('/', checkAuth, (req, res) => {
+	const userId = req.userData.userId;
+
+	User.findOneAndUpdate(
+		{ _id: userId },
+		{
+			$set: {
+				name: req.body.name,
+				email: req.body.email,
+				phone: req.body.phone,
+			},
+		}
+	)
+		.exec()
+		.then((result) => {
+			res.status(200).json({
+				message: 'User info updated',
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
 
 module.exports = router;
