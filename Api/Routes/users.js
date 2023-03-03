@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const checkAuth = require('../Middlewares/check-auth');
 const User = require('../Models/User');
 
 router.post('/signup', (req, res, next) => {
@@ -107,6 +108,22 @@ router.delete('/:userId', (req, res, next) => {
 		})
 		.catch((err) => {
 			console.log(err);
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
+
+// Get the authenticated user
+router.get('/', checkAuth, (req, res) => {
+	const userId = req.userData.userId;
+
+	User.find({ _id: userId })
+		.exec()
+		.then((docs) => {
+			res.status(200).json(docs);
+		})
+		.catch((err) => {
 			res.status(500).json({
 				error: err,
 			});
