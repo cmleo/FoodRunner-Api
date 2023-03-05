@@ -68,39 +68,38 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 		});
 });
 
-// Update a restaurant by id
-router.patch('/:restaurantId', (req, res) => {
-	const restaurantId = req.params.restaurantId;
+// Update a restaurant by IDs
+router.patch('/:restaurantId/:productId?', (req, res) => {
+	const { restaurantId, productId } = req.params;
+	const updateObj = {};
 
-	const menuItems = req.body.menu.map((menuItem) => {
-		return {
-			productName: menuItem.productName,
-			description: menuItem.description,
-			price: menuItem.price,
-		};
+	Object.keys(req.body).forEach((key) => {
+		if (key === 'restaurantName' || key === 'location') {
+			updateObj[key] = req.body[key];
+		} else if (key === 'productName' || key === 'description' || key === 'price') {
+			updateObj[`menu.$.${key}`] = req.body[key];
+		}
 	});
 
-	Restaurant.updateOne(
-		{ _id: restaurantId },
-		{
-			$set: {
-				restaurantName: req.body.restaurantName,
-				location: req.body.location,
-				menu: menuItems,
-			},
-		}
-	)
-		.exec()
+	const filter = { _id: restaurantId };
+	if (productId) {
+		filter['menu._id'] = productId;
+	}
+
+	Restaurant.findOneAndUpdate(filter, updateObj, { new: true })
 		.then((updatedRestaurant) => {
-			res.status(200).json({
-				message: 'Updated restaurant successfully',
-				updatedRestaurant: updatedRestaurant,
+			if (!updatedRestaurant) {
+				return res.status(404).json({ message: 'Restaurant or product not found' });
+			}
+
+			return res.json({
+				message: 'Restaurant updated successfully',
+				result: updatedRestaurant,
 			});
 		})
-		.catch((err) => {
-			res.status(500).json({
-				error: err,
-			});
+		.catch((error) => {
+			console.error(error);
+			res.status(500).json({ message: 'Server Error' });
 		});
 });
 
