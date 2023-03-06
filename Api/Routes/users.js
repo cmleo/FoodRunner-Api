@@ -8,7 +8,6 @@ dotenv.config();
 
 const checkAuth = require('../Middlewares/check-auth');
 const User = require('../Models/User');
-const { update } = require('../Models/User');
 
 router.post('/signup', (req, res, next) => {
 	User.find({ email: req.body.email })
@@ -159,6 +158,50 @@ router.patch('/', checkAuth, (req, res) => {
 				error: err,
 			});
 		});
+});
+
+// Change password route for authenticated user
+router.patch('/change-password', checkAuth, async (req, res) => {
+	try {
+		const { userId } = req.userData;
+		const { currentPassword, newPassword } = req.body;
+
+		// Find user by ID
+		const user = await User.findById(userId);
+
+		// Check if current password matches the one in the database
+		const isMatch = await bcrypt.compare(currentPassword, user.password);
+		if (!isMatch) {
+			return res.status(401).json({
+				message: 'Current password is incorrect',
+			});
+		}
+
+		// Generate new password hash
+		const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+		// Update user's password in the database
+		const updatedUser = await User.findByIdAndUpdate(userId, { password: newPasswordHash }, { new: true });
+
+		// Generate new JWT token for the user
+		const token = jwt.sign(
+			{
+				userId: updatedUser._id,
+				email: updatedUser.email,
+			},
+			process.env.JWT_KEY,
+			{ expiresIn: '1h' }
+		);
+
+		// Return success message and new JWT token
+		return res.json({
+			message: 'Password updated successfully',
+			token,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Server Error' });
+	}
 });
 
 module.exports = router;
