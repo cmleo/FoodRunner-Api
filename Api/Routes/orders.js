@@ -16,6 +16,7 @@ router.post('/', checkAuth, (req, res) => {
 
 	const newOrder = new Order({
 		user: req.userData.userId,
+		orderNumber: Math.floor(100000 + Math.random() * 900000).toString(),
 		order: orderItems,
 		deliveryAddress: req.body.deliveryAddress,
 		totalPrice: req.body.totalPrice,

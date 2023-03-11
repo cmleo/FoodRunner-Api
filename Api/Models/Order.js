@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 // Define schema and model for orders
 const orderSchema = new mongoose.Schema({
 	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+	orderNumber: { type: String, unique: true, maxLength: 6 },
 	order: [
 		{
 			productName: { type: String, required: true },
