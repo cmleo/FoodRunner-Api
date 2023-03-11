@@ -15,6 +15,18 @@ const orderSchema = new mongoose.Schema({
 	totalPrice: { type: Number, required: true },
 	timestamp: { type: Date, default: Date.now },
 });
+
+// Hook to generate unique orderNumber before saving new order
+orderSchema.pre('save', function (next) {
+	const order = this;
+
+	// Generate 6-digit random order number
+	const orderNumber = Math.floor(100000 + Math.random() * 900000).toString();
+
+	order.orderNumber = orderNumber;
+	next();
+});
+
 const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;
