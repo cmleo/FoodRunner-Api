@@ -12,9 +12,31 @@ router.get('/', (req, res, next) => {
 			res.status(200).json(docs);
 		})
 		.catch((err) => {
+			res.status(500).json({
+				error: err,
+				message: 'Something went wrong, please contact administrator!',
+			});
+		});
+});
+
+// Get a specific restaurant by id
+router.get('/:restaurantId', (req, res, next) => {
+	const { restaurantId } = req.params;
+
+	Restaurant.findById(restaurantId)
+		.exec()
+		.then((restaurant) => {
+			if (restaurant) {
+				res.status(200).json({ restaurant });
+			} else {
+				res.status(404).json({ message: 'Restaurant not found' });
+			}
+		})
+		.catch((err) => {
 			console.log(err);
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -46,6 +68,7 @@ router.post('/', checkAuth, (req, res, next) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -58,6 +81,7 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -72,6 +96,7 @@ router.delete('/:restaurantId/:productId', checkAuth, (req, res, next) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -105,9 +130,11 @@ router.patch('/:restaurantId/:productId?', checkAuth, (req, res) => {
 				result: updatedRestaurant,
 			});
 		})
-		.catch((error) => {
-			console.error(error);
-			res.status(500).json({ message: 'Server Error' });
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+				message: 'Something went wrong, please contact administrator!',
+			});
 		});
 });
 
