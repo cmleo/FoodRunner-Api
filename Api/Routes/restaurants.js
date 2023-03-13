@@ -56,7 +56,20 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 		.exec()
 		.then(() => res.status(204).json({ message: 'Restaurant deleted' }))
 		.catch((err) => {
-			console.log(err);
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
+
+// Delete a product by its id
+router.delete('/:restaurantId/:productId', checkAuth, (req, res, next) => {
+	const { restaurantId, productId } = req.params;
+
+	Restaurant.updateOne({ _id: restaurantId }, { $pull: { menu: { _id: productId } } })
+		.exec()
+		.then(() => res.status(204).json({ message: 'Product deleted' }))
+		.catch((err) => {
 			res.status(500).json({
 				error: err,
 			});
@@ -64,7 +77,7 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 });
 
 // Update a restaurant by IDs
-router.patch('/:restaurantId/:productId?', (req, res) => {
+router.patch('/:restaurantId/:productId?', checkAuth, (req, res) => {
 	const { restaurantId, productId } = req.params;
 	const updateObj = {};
 
