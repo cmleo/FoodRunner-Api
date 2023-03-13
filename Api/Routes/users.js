@@ -42,6 +42,7 @@ router.post('/signup', (req, res, next) => {
 							.catch((err) => {
 								res.status(500).json({
 									error: err,
+									message: 'Something went wrong, please contact administrator!',
 								});
 							});
 					}
@@ -61,8 +62,8 @@ router.post('/login', (req, res, next) => {
 			}
 			bcrypt.compare(req.body.password, user.password, (err, result) => {
 				if (err) {
-					console.log(err);
 					return res.status(401).json({
+						error: err,
 						message: 'Password is incorrect',
 					});
 				}
@@ -90,9 +91,9 @@ router.post('/login', (req, res, next) => {
 			});
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -109,8 +110,10 @@ router.post('/logout', checkAuth, (req, res) => {
 			message: 'User logged out successfully',
 		});
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: 'Server Error' });
+		res.status(500).json({
+			error: err,
+			message: 'Something went wrong, please contact administrator!',
+		});
 	}
 });
 
@@ -127,9 +130,9 @@ router.delete('/:userId', checkAuth, (req, res, next) => {
 			});
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -146,6 +149,7 @@ router.get('/', checkAuth, (req, res, next) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -174,6 +178,7 @@ router.patch('/', checkAuth, (req, res) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
@@ -217,8 +222,10 @@ router.patch('/change-password', checkAuth, async (req, res) => {
 			token,
 		});
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: 'Server Error' });
+		res.status(500).json({
+			error: err,
+			message: 'Something went wrong, please contact administrator!',
+		});
 	}
 });
 
