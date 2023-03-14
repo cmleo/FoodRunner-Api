@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Restaurant = require('../Models/Restaurant');
-const checkAuth = require('../Middlewares/check-auth');
+const checkAdminAuth = require('../Middlewares/checkAdminAuth');
 
 // Get all restaurants
 router.get('/', (req, res, next) => {
@@ -17,6 +17,19 @@ router.get('/', (req, res, next) => {
 				message: 'Something went wrong, please contact administrator!',
 			});
 		});
+});
+
+// GET all restaurants created by a specific admin
+router.get('/admin', checkAdminAuth, async (req, res, next) => {
+	try {
+		const restaurants = await Restaurant.find({ createdBy: req.adminData.userId });
+		res.status(200).json(restaurants);
+	} catch (err) {
+		res.status(500).json({
+			error: err,
+			message: 'Something went wrong, please contact administrator!',
+		});
+	}
 });
 
 // Get a specific restaurant by id
@@ -42,7 +55,7 @@ router.get('/:restaurantId', (req, res, next) => {
 });
 
 // Create a new restaurant
-router.post('/', checkAuth, (req, res, next) => {
+router.post('/', checkAdminAuth, (req, res, next) => {
 	const menuItems = req.body.menu.map((menuItem) => {
 		return {
 			productName: menuItem.productName,
@@ -55,6 +68,7 @@ router.post('/', checkAuth, (req, res, next) => {
 		restaurantName: req.body.restaurantName,
 		location: req.body.location,
 		menu: menuItems,
+		createdBy: req.adminData.userId,
 	});
 
 	restaurant
@@ -74,7 +88,7 @@ router.post('/', checkAuth, (req, res, next) => {
 });
 
 // Delete restaurant by id
-router.delete('/:restaurantId', checkAuth, (req, res, next) => {
+router.delete('/:restaurantId', checkAdminAuth, (req, res, next) => {
 	Restaurant.remove({ _id: req.params.restaurantId })
 		.exec()
 		.then(() => res.status(204).json({ message: 'Restaurant deleted' }))
@@ -87,7 +101,7 @@ router.delete('/:restaurantId', checkAuth, (req, res, next) => {
 });
 
 // Delete a product by its id
-router.delete('/:restaurantId/:productId', checkAuth, (req, res, next) => {
+router.delete('/:restaurantId/:productId', checkAdminAuth, (req, res, next) => {
 	const { restaurantId, productId } = req.params;
 
 	Restaurant.updateOne({ _id: restaurantId }, { $pull: { menu: { _id: productId } } })
@@ -102,7 +116,7 @@ router.delete('/:restaurantId/:productId', checkAuth, (req, res, next) => {
 });
 
 // Update a restaurant by IDs
-router.patch('/:restaurantId/:productId?', checkAuth, (req, res) => {
+router.patch('/:restaurantId/:productId?', checkAdminAuth, (req, res) => {
 	const { restaurantId, productId } = req.params;
 	const updateObj = {};
 
