@@ -32,6 +32,11 @@ const restaurantSchema = new mongoose.Schema({
 			},
 		},
 	],
+	createdBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 });
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 
