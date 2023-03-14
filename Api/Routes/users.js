@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const checkAuth = require('../Middlewares/check-auth');
+const checkUserAuth = require('../Middlewares/checkUserAuth');
 const User = require('../Models/User');
 
 router.post('/signup', (req, res, next) => {
@@ -52,17 +52,17 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-	User.findOne({ email: req.body.email })
+	User.findOne({ email: req.body.email, role: 'user' })
 		.exec()
 		.then((user) => {
 			if (!user) {
-				return res.status(401).json({
-					message: "Email doesn't exist",
+				return res.status(400).json({
+					message: 'Email is incorrect',
 				});
 			}
 			bcrypt.compare(req.body.password, user.password, (err, result) => {
 				if (err) {
-					return res.status(401).json({
+					return res.status(400).json({
 						error: err,
 						message: 'Password is incorrect',
 					});
@@ -99,7 +99,7 @@ router.post('/login', (req, res, next) => {
 });
 
 // Logout route for authenticated user
-router.post('/logout', checkAuth, (req, res) => {
+router.post('/logout', checkUserAuth, (req, res) => {
 	try {
 		// Remove JWT token from client-side storage
 		AsyncStorage.removeItem('jwtToken');
@@ -118,15 +118,14 @@ router.post('/logout', checkAuth, (req, res) => {
 });
 
 // Delete the authenticated user
-router.delete('/:userId', checkAuth, (req, res, next) => {
+router.delete('/:userId', checkUserAuth, (req, res, next) => {
 	const userId = req.userData.userId;
 
 	User.remove({ _id: userId })
 		.exec()
-		.then((result) => {
+		.then(() => {
 			res.status(204).json({
 				message: 'User deleted successfully',
-				DeletedUser: result,
 			});
 		})
 		.catch((err) => {
@@ -138,13 +137,13 @@ router.delete('/:userId', checkAuth, (req, res, next) => {
 });
 
 // Get the authenticated user
-router.get('/', checkAuth, (req, res, next) => {
+router.get('/', checkUserAuth, (req, res, next) => {
 	const userId = req.userData.userId;
 
 	User.find({ _id: userId })
 		.exec()
-		.then((docs) => {
-			res.status(200).json(docs);
+		.then((result) => {
+			res.status(200).json(result);
 		})
 		.catch((err) => {
 			res.status(500).json({
@@ -155,7 +154,7 @@ router.get('/', checkAuth, (req, res, next) => {
 });
 
 // Update user info
-router.patch('/', checkAuth, (req, res) => {
+router.patch('/', checkUserAuth, (req, res) => {
 	const userId = req.userData.userId;
 
 	User.findOneAndUpdate(
@@ -169,10 +168,10 @@ router.patch('/', checkAuth, (req, res) => {
 		}
 	)
 		.exec()
-		.then((result) => {
+		.then((updatedUser) => {
 			res.status(200).json({
 				message: 'User info updated',
-				UpdatedUser: result,
+				result: updatedUser,
 			});
 		})
 		.catch((err) => {
@@ -184,7 +183,7 @@ router.patch('/', checkAuth, (req, res) => {
 });
 
 // Change password route for authenticated user
-router.patch('/change-password', checkAuth, async (req, res) => {
+router.patch('/change-password', checkUserAuth, async (req, res) => {
 	try {
 		const { userId } = req.userData;
 		const { currentPassword, newPassword } = req.body;
