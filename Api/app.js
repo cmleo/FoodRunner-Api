@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./Routes/users');
+const adminRoutes = require('./Routes/admin');
 const restaurantRoutes = require('./Routes/restaurants');
 const orderRoutes = require('./Routes/orders');
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded());
 
 // AppMiddlewares
 app.use('/user', userRoutes);
+app.use('/admin', adminRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/orders', orderRoutes);
 
