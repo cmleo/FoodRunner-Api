@@ -163,7 +163,8 @@ router.patch('/', checkAdminAuth, (req, res) => {
 				email: req.body.email,
 				phone: req.body.phone,
 			},
-		}
+		},
+		{ new: true }
 	)
 		.exec()
 		.then((updatedAdmin) => {

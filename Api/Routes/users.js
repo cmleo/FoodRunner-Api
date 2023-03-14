@@ -162,7 +162,8 @@ router.patch('/', checkUserAuth, (req, res) => {
 				email: req.body.email,
 				phone: req.body.phone,
 			},
-		}
+		},
+		{ new: true }
 	)
 		.exec()
 		.then((updatedUser) => {
