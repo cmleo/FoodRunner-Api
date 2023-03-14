@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const checkAuth = require('../Middlewares/check-auth');
+const checkUserAuth = require('../Middlewares/checkUserAuth');
 const Order = require('../Models/Order');
 
 // Add order to authenticated user
-router.post('/', checkAuth, (req, res) => {
+router.post('/', checkUserAuth, (req, res) => {
 	const orderItems = req.body.order.map((orderItem) => {
 		return {
 			productName: orderItem.productName,
@@ -23,18 +23,22 @@ router.post('/', checkAuth, (req, res) => {
 
 	newOrder
 		.save()
-		.then((savedOrder) => {
-			res.status(201).json(savedOrder);
+		.then((createdOrder) => {
+			res.status(201).json({
+				message: 'Order created successfully',
+				result: createdOrder,
+			});
 		})
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
 
 // Get all orders for authenticated user in descending order
-router.get('/', checkAuth, (req, res) => {
+router.get('/', checkUserAuth, (req, res) => {
 	const userId = req.userData.userId;
 
 	Order.find({ user: userId })
@@ -46,6 +50,7 @@ router.get('/', checkAuth, (req, res) => {
 		.catch((err) => {
 			res.status(500).json({
 				error: err,
+				message: 'Something went wrong, please contact administrator!',
 			});
 		});
 });
