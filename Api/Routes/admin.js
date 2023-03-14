@@ -107,7 +107,7 @@ router.post('/logout', checkAdminAuth, (req, res) => {
 		return res.status(200).json({
 			message: 'Admin logged out successfully',
 		});
-	} catch (error) {
+	} catch (err) {
 		res.status(500).json({
 			error: err,
 			message: 'Something went wrong, please contact administrator!',
@@ -218,7 +218,7 @@ router.patch('/change-password', checkAdminAuth, async (req, res) => {
 			message: 'Password updated successfully',
 			token,
 		});
-	} catch (error) {
+	} catch (err) {
 		res.status(500).json({
 			error: err,
 			message: 'Something went wrong, please contact administrator!',
