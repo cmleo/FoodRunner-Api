@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
 			throw new Error();
 		}
 
-		req.userData = decoded;
+		req.adminData = decoded;
 		next();
 	} catch (error) {
 		return res.status(401).json({
