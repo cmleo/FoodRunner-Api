@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
 // GET all restaurants created by a specific admin
 router.get('/admin', checkAdminAuth, async (req, res, next) => {
 	try {
-		const restaurants = await Restaurant.find({ createdBy: req.adminData.userId });
+		const restaurants = await Restaurant.find({ createdBy: req.adminData.adminId });
 		res.status(200).json(restaurants);
 	} catch (err) {
 		res.status(500).json({
@@ -68,7 +68,7 @@ router.post('/', checkAdminAuth, (req, res, next) => {
 		restaurantName: req.body.restaurantName,
 		location: req.body.location,
 		menu: menuItems,
-		createdBy: req.adminData.userId,
+		createdBy: req.adminData.adminId,
 	});
 
 	restaurant

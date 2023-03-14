@@ -57,13 +57,13 @@ router.post('/login', (req, res, next) => {
 		.exec()
 		.then((admin) => {
 			if (!admin) {
-				return res.status(401).json({
-					message: "Email doesn't exist",
+				return res.status(400).json({
+					message: 'Email is incorrect',
 				});
 			}
 			bcrypt.compare(req.body.password, admin.password, (err, result) => {
 				if (err) {
-					return res.status(401).json({
+					return res.status(400).json({
 						error: err,
 						message: 'Password is incorrect',
 					});
@@ -195,7 +195,7 @@ router.patch('/change-password', checkAdminAuth, async (req, res) => {
 		// Check if current password matches the one in the database
 		const isMatch = await bcrypt.compare(currentPassword, admin.password);
 		if (!isMatch) {
-			return res.status(401).json({
+			return res.status(400).json({
 				message: 'Current password is incorrect',
 			});
 		}
