@@ -73,6 +73,7 @@ router.post('/login', (req, res, next) => {
 						{
 							email: user.email,
 							userId: user._id,
+							role: user.role,
 						},
 						process.env.JWT_KEY,
 						{
@@ -84,10 +85,6 @@ router.post('/login', (req, res, next) => {
 						token: token,
 					});
 				}
-
-				return res.status(401).json({
-					message: 'Auth failed',
-				});
 			});
 		})
 		.catch((err) => {

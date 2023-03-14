@@ -74,6 +74,7 @@ router.post('/login', (req, res, next) => {
 						{
 							email: admin.email,
 							adminId: admin._id,
+							role: 'admin',
 						},
 						process.env.JWT_KEY,
 						{
@@ -85,10 +86,6 @@ router.post('/login', (req, res, next) => {
 						token: token,
 					});
 				}
-
-				return res.status(401).json({
-					message: 'Auth failed',
-				});
 			});
 		})
 		.catch((err) => {
