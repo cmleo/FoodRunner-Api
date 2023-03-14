@@ -116,7 +116,7 @@ router.post('/logout', checkAdminAuth, (req, res) => {
 });
 
 // Delete the authenticated admin
-router.delete('/:adminId', checkAdminAuth, (req, res, next) => {
+router.delete('/', checkAdminAuth, (req, res, next) => {
 	const adminId = req.adminData.adminId;
 
 	User.remove({ _id: adminId })

@@ -115,7 +115,7 @@ router.post('/logout', checkUserAuth, (req, res) => {
 });
 
 // Delete the authenticated user
-router.delete('/:userId', checkUserAuth, (req, res, next) => {
+router.delete('/', checkUserAuth, (req, res, next) => {
 	const userId = req.userData.userId;
 
 	User.remove({ _id: userId })
