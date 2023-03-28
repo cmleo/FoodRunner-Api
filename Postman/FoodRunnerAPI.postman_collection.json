@@ -7,6 +7,31 @@
 	},
 	"item": [
 		{
+			"name": "http://localhost:3000/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["user"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3000/user/signup",
 			"request": {
 				"method": "POST",
@@ -33,16 +58,6 @@
 		{
 			"name": "http://localhost:3000/user/login",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZXhAZW1haWwuY29tIiwidXNlcklkIjoiNjNhMWNiMjRhZmM1YmFkZjBhYjYzZDA4IiwiaWF0IjoxNjczOTk3NTU0LCJleHAiOjE2NzQwMDExNTR9.zQPk7h44H03iWTBeSXNyNijzv4-wHDLbZSfhjGmRwm8",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -65,43 +80,48 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/user/userID",
+			"name": "http://localhost:3000/user/logout",
 			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/user/63a1adc92adfd85456ac0e21",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "3000",
-					"path": ["user", "63a1adc92adfd85456ac0e21"]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:3000/products",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/products",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "3000",
-					"path": ["products"]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:3000/products",
-			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/logout",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["user", "logout"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"name\": \"product name\",\r\n    \"description\": \"product description\",\r\n    \"price\": \"product price\"\r\n}",
+					"raw": "{\r\n    \"name\": \"updated name\",\r\n    \"email\": \"updated email\",\r\n    \"phone\": \"updated phone number\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,11 +129,193 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/products",
+					"raw": "http://localhost:3000/user",
 					"protocol": "http",
 					"host": ["localhost"],
 					"port": "3000",
-					"path": ["products"]
+					"path": ["user"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/userId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["user", "userId"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/admin",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"adminName\",\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"adminPassword\",\r\n    \"phone\": \"adminPhoneNumber\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/admin/signup",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin", "signup"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"adminPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/admin/login",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin", "login"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin/logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/admin/logout",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin", "logout"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"updated admin name\",\r\n    \"email\": \"updated admin email\",\r\n    \"phone\": \"updated admin phone number\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/admin",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/admin",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["admin"]
 				}
 			},
 			"response": []
@@ -129,6 +331,21 @@
 					"host": ["localhost"],
 					"port": "3000",
 					"path": ["restaurants"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants/restaurantId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants/restaurantId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "restaurantId"]
 				}
 			},
 			"response": []
@@ -141,7 +358,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQG1haWwuY29tIiwidXNlcklkIjoiNjNmM2U1MTE1MzA2MDkzMTQ2ZDkwYjZlIiwiaWF0IjoxNjc3MTg0OTMyLCJleHAiOjE2NzcxODg1MzJ9.1FRgu8U5UWkWMSDgp4xciVflImx4lTTkE3Vtb-sXM8U",
+							"value": "Token",
 							"type": "string"
 						}
 					]
@@ -150,7 +367,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"restaurantName\": \"restaurant name\",\r\n    \"location\": \"restaurant location\",\r\n    \"menu\": [\r\n        {\r\n            \"productName\": \"product name\",\r\n            \"description\": \"product description\",\r\n            \"price\": 0 \r\n        }\r\n    ]\r\n}",
+					"raw": "{    \r\n    \"restaurantName\": \"restaurant name\",\r\n    \"location\": \"restaurant location\",\r\n    \"menu\": [\r\n        {\r\n            \"productName\": \"product name\",\r\n            \"description\": \"product description\",\r\n            \"price\": 10.99 \r\n        },\r\n        {\r\n            \"productName\": \"product name2\",\r\n            \"description\": \"product description2\",\r\n            \"price\": 22.99 \r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,6 +380,149 @@
 					"host": ["localhost"],
 					"port": "3000",
 					"path": ["restaurants"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants/restaurantId/productId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"restaurant field\": \"update restaurant field\",\r\n    \"product field\": \"update product field\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/restaurants/restaurantId/productId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "restaurantId", "productId"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants/restaurantId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants/restaurantId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "restaurantId"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/restaurants/restaurantId/productId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants/restaurantId/productId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "restaurantId", "productId"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/orders",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["orders"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"order\": [\r\n        {\r\n            \"productName\": \"product name\",\r\n            \"quantity\": 0,\r\n            \"price\": 0\r\n        }\r\n    ],\r\n    \"deliveryAddress\": \"delivery address\",\r\n    \"totalPrice\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/orders",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["orders"]
 				}
 			},
 			"response": []
