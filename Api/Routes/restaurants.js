@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const router = express.Router();
 const Restaurant = require('../Models/Restaurant');
 const checkAdminAuth = require('../Middlewares/checkAdminAuth');
@@ -150,6 +151,44 @@ router.patch('/:restaurantId/:productId?', checkAdminAuth, (req, res) => {
 				message: 'Something went wrong, please contact administrator!',
 			});
 		});
+});
+
+// Search restaurants or products by name
+router.get('/search/:name', (req, res, next) => {
+	const { name } = req.params;
+	const { sortBy, sortOrder, page, limit } = req.query;
+	// Split parameter by underscore and join with space
+	const productName = name.split('_').join(' ');
+
+	// Create an options object to configure sorting, pagination, and limit
+	const options = {
+		// Sort by field and sortOrder
+		sort: { [sortBy]: sortOrder === 'desc' ? -1 : 1 },
+		// Page number, default to 1
+		page: parseInt(page) || 1,
+		// Maximum number of results per page, default to 10
+		limit: parseInt(limit) || 10,
+	};
+
+	// Use regex to perform case-insensitive search for restaurant name or product name
+	Restaurant.paginate(
+		{
+			$or: [
+				{ restaurantName: { $regex: new RegExp(productName, 'i') } },
+				{ 'menu.productName': { $regex: new RegExp(productName, 'i') } },
+			],
+		},
+		options,
+		(err, result) => {
+			if (err) {
+				return res.status(500).json({
+					error: err,
+					message: 'Something went wrong, please contact administrator!',
+				});
+			}
+			res.status(200).json(result);
+		}
+	);
 });
 
 module.exports = router;

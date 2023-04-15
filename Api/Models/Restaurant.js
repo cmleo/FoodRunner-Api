@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 // Define schema and model for restaurants
 const restaurantSchema = new mongoose.Schema({
@@ -37,7 +38,15 @@ const restaurantSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true,
 	},
+
+	created_at: {
+		type: Date,
+		default: Date.now,
+	},
 });
+
+restaurantSchema.plugin(mongoosePaginate);
+
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 
 module.exports = Restaurant;
