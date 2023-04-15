@@ -351,6 +351,39 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:3000/restaurants/search/NAME",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants/search/NAME?sortBy=price&sortOrder=asc&page=1&limit=20",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "search", "NAME"],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "price"
+						},
+						{
+							"key": "sortOrder",
+							"value": "asc"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3000/restaurants",
 			"request": {
 				"auth": {
