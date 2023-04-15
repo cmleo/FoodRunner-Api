@@ -61,13 +61,6 @@ router.post('/login', (req, res, next) => {
 				});
 			}
 			bcrypt.compare(req.body.password, user.password, (err, result) => {
-				if (err) {
-					return res.status(400).json({
-						error: err,
-						message: 'Password is incorrect',
-					});
-				}
-
 				if (result) {
 					const token = jwt.sign(
 						{
@@ -83,6 +76,11 @@ router.post('/login', (req, res, next) => {
 					return res.status(200).json({
 						message: 'Auth successful',
 						token: token,
+					});
+				} else {
+					return res.status(400).json({
+						error: err,
+						message: 'Password is incorrect',
 					});
 				}
 			});
