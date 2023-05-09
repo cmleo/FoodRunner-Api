@@ -69,6 +69,7 @@ router.post('/', checkAdminAuth, (req, res, next) => {
 		restaurantName: req.body.restaurantName,
 		location: req.body.location,
 		menu: menuItems,
+		logo: req.body.logo,
 		createdBy: req.adminData.adminId,
 	});
 
@@ -122,7 +123,7 @@ router.patch('/:restaurantId/:productId?', checkAdminAuth, (req, res) => {
 	const updateObj = {};
 
 	Object.keys(req.body).forEach((key) => {
-		if (key === 'restaurantName' || key === 'location') {
+		if (key === 'restaurantName' || key === 'location' || key === 'logo') {
 			updateObj[key] = req.body[key];
 		} else if (key === 'productName' || key === 'description' || key === 'price') {
 			updateObj[`menu.$.${key}`] = req.body[key];

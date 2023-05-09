@@ -33,6 +33,9 @@ const restaurantSchema = new mongoose.Schema({
 			},
 		},
 	],
+	logo: {
+		type: String,
+	},
 	createdBy: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
