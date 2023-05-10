@@ -8,17 +8,23 @@ const Order = require('../Models/Order');
 router.post('/', checkUserAuth, (req, res) => {
 	const orderItems = req.body.order.map((orderItem) => {
 		return {
+			_id: mongoose.Types.ObjectId(orderItem._id),
 			productName: orderItem.productName,
 			quantity: orderItem.quantity,
-			price: orderItem.price,
+			pricePerQuantity: orderItem.pricePerQuantity,
+			totalPriceOfProduct: orderItem.pricePerQuantity * orderItem.quantity,
 		};
 	});
+
+	totalPrice = orderItems.reduce((acc, orderItem) => {
+		return acc + orderItem.totalPriceOfProduct;
+	}, 0);
 
 	const newOrder = new Order({
 		user: req.userData.userId,
 		order: orderItems,
 		deliveryAddress: req.body.deliveryAddress,
-		totalPrice: req.body.totalPrice,
+		totalPrice: totalPrice,
 	});
 
 	newOrder
@@ -46,6 +52,30 @@ router.get('/', checkUserAuth, (req, res) => {
 		.exec()
 		.then((docs) => {
 			res.status(200).json(docs);
+		})
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+				message: 'Something went wrong, please contact administrator!',
+			});
+		});
+});
+
+// Get order by orderNumber for authenticated user
+router.get('/:orderNumber', checkUserAuth, (req, res) => {
+	const userId = req.userData.userId;
+	const orderNumber = req.params.orderNumber;
+
+	Order.findOne({ user: userId, orderNumber: orderNumber })
+		.exec()
+		.then((doc) => {
+			if (doc) {
+				res.status(200).json(doc);
+			} else {
+				res.status(404).json({
+					message: 'Order not found',
+				});
+			}
 		})
 		.catch((err) => {
 			res.status(500).json({

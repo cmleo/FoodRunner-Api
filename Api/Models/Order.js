@@ -6,13 +6,15 @@ const orderSchema = new mongoose.Schema({
 	orderNumber: { type: String, unique: true, maxLength: 6 },
 	order: [
 		{
+			_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant.$menu._id' },
 			productName: { type: String, required: true },
 			quantity: { type: Number, default: 1 },
-			price: { type: Number, required: true },
+			pricePerQuantity: { type: Number, required: true },
+			totalPriceOfProduct: { type: Number },
 		},
 	],
 	deliveryAddress: { type: String, required: true },
-	totalPrice: { type: Number, required: true },
+	totalPrice: { type: Number },
 	timestamp: { type: Date, default: Date.now },
 });
 
