@@ -336,6 +336,31 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:3000/restaurants/admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/restaurants/admin",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["restaurants", "admin"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3000/restaurants/restaurantId",
 			"request": {
 				"method": "GET",
@@ -351,7 +376,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/restaurants/search/NAME",
+			"name": "http://localhost:3000/restaurants/search/NAME?query",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -418,7 +443,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/restaurants/restaurantId/productId",
+			"name": "http://localhost:3000/restaurants/restaurantId/productId?",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -442,11 +467,17 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/restaurants/restaurantId/productId",
+					"raw": "http://localhost:3000/restaurants/restaurantId/productId?",
 					"protocol": "http",
 					"host": ["localhost"],
 					"port": "3000",
-					"path": ["restaurants", "restaurantId", "productId"]
+					"path": ["restaurants", "restaurantId", "productId"],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
 				}
 			},
 			"response": []
@@ -527,6 +558,31 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:3000/orders/orderNumber",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/orders/orderNumber",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["orders", "orderNumber"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3000/orders",
 			"request": {
 				"auth": {
@@ -543,7 +599,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"order\": [\r\n        {\r\n            \"productName\": \"product name\",\r\n            \"quantity\": 0,\r\n            \"price\": 0\r\n        }\r\n    ],\r\n    \"deliveryAddress\": \"delivery address\",\r\n    \"totalPrice\": 0\r\n}",
+					"raw": "{\r\n    \"order\": [\r\n        {\r\n            \"_id\": \"id of the 1st product\",\r\n            \"productName\": \"name of the 1st product\",\r\n            \"quantity\": 1,\r\n            \"pricePerQuantity\": 1.99\r\n        },\r\n        {\r\n            \"_id\": \"id of the 2nd product\",\r\n            \"productName\": \"name of the 2nd product\",\r\n            \"quantity\": 1,\r\n            \"pricePerQuantity\": 1.99\r\n        }\r\n    ],\r\n    \"deliveryAddress\": \"delivery address\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -556,6 +612,138 @@
 					"host": ["localhost"],
 					"port": "3000",
 					"path": ["orders"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/categories",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["categories"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/categoryId/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/categories/categoryId/restaurants",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["categories", "categoryId", "restaurants"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"category name\",\r\n    \"logo\": \"logo image url not required\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/categories",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["categories"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/restaurant/categoryId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"restaurantId\": \"restaurantId\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/categories/restaurant/categoryId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["categories", "restaurant", "categoryId"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/restaurantId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"categoryId\": \"categoryId\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/categories/restaurantId",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["categories", "restaurantId"]
 				}
 			},
 			"response": []
