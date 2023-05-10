@@ -8,6 +8,7 @@ const userRoutes = require('./Routes/users');
 const adminRoutes = require('./Routes/admin');
 const restaurantRoutes = require('./Routes/restaurants');
 const orderRoutes = require('./Routes/orders');
+const categoryRoutes = require('./Routes/categories');
 
 mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
@@ -23,5 +24,6 @@ app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/orders', orderRoutes);
+app.use('/categories', categoryRoutes);
 
 module.exports = app;
