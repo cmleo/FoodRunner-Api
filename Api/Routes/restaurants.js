@@ -58,6 +58,7 @@ router.post('/', checkAdminAuth, async (req, res, next) => {
 				productName: menuItem.productName,
 				description: menuItem.description,
 				price: menuItem.price,
+				image: menuItem.image,
 			};
 		});
 
@@ -138,7 +139,7 @@ router.patch('/:restaurantId/:productId?', checkAdminAuth, async (req, res) => {
 		Object.keys(req.body).forEach((key) => {
 			if (key === 'restaurantName' || key === 'location' || key === 'logo') {
 				updateObj[key] = req.body[key];
-			} else if (key === 'productName' || key === 'description' || key === 'price') {
+			} else if (key === 'productName' || key === 'description' || key === 'price' || key === 'image') {
 				updateObj[`menu.$.${key}`] = req.body[key];
 			}
 		});
