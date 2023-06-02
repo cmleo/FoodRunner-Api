@@ -17,7 +17,7 @@ router.post('/', checkUserAuth, (req, res) => {
 	});
 
 	totalPrice = orderItems.reduce((acc, orderItem) => {
-		return acc + orderItem.totalPriceOfProduct;
+		return acc + orderItem.totalPriceOfProduct + req.body.deliveryFee;
 	}, 0);
 
 	const newOrder = new Order({
