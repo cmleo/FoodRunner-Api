@@ -24,6 +24,7 @@ router.post('/', checkUserAuth, (req, res) => {
 		user: req.userData.userId,
 		order: orderItems,
 		deliveryAddress: req.body.deliveryAddress,
+		deliveryFee: req.body.deliveryFee,
 		totalPrice: totalPrice,
 	});
 

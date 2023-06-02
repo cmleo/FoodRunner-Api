@@ -14,6 +14,7 @@ const orderSchema = new mongoose.Schema({
 		},
 	],
 	deliveryAddress: { type: String, required: true },
+	deliveryFee: { type: Number, required: true },
 	totalPrice: { type: Number },
 	timestamp: { type: Date, default: Date.now },
 });
