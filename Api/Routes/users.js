@@ -97,8 +97,7 @@ router.post('/login', (req, res, next) => {
 router.post('/logout', checkUserAuth, (req, res) => {
 	try {
 		// Remove JWT token from client-side storage
-		AsyncStorage.removeItem('jwtToken');
-		// Will be using AsyncStorage on the Client-Side for storing the JWT token
+		AsyncStorage.removeItem('token');
 
 		// Send success response
 		return res.status(200).json({
