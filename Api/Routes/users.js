@@ -93,24 +93,6 @@ router.post('/login', (req, res, next) => {
 		});
 });
 
-// Logout route for authenticated user
-router.post('/logout', checkUserAuth, (req, res) => {
-	try {
-		// Remove JWT token from client-side storage
-		AsyncStorage.removeItem('token');
-
-		// Send success response
-		return res.status(200).json({
-			message: 'User logged out successfully',
-		});
-	} catch (error) {
-		res.status(500).json({
-			error: err,
-			message: 'Something went wrong, please contact administrator!',
-		});
-	}
-});
-
 // Delete the authenticated user
 router.delete('/', checkUserAuth, (req, res, next) => {
 	const userId = req.userData.userId;

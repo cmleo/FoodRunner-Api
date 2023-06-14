@@ -96,25 +96,6 @@ router.post('/login', (req, res, next) => {
 		});
 });
 
-// Logout route for authenticated admin
-router.post('/logout', checkAdminAuth, (req, res) => {
-	try {
-		// Remove JWT token from client-side storage
-		AsyncStorage.removeItem('jwtToken');
-		// Will be using AsyncStorage on the Client-Side for storing the JWT token
-
-		// Send success response
-		return res.status(200).json({
-			message: 'Admin logged out successfully',
-		});
-	} catch (err) {
-		res.status(500).json({
-			error: err,
-			message: 'Something went wrong, please contact administrator!',
-		});
-	}
-});
-
 // Delete the authenticated admin
 router.delete('/', checkAdminAuth, (req, res, next) => {
 	const adminId = req.adminData.adminId;
