@@ -56,8 +56,8 @@ router.post('/login', (req, res, next) => {
 		.exec()
 		.then((user) => {
 			if (!user) {
-				return res.status(400).json({
-					message: 'Email is incorrect',
+				return res.status(401).json({
+					message: 'Account with this email does not exist',
 				});
 			}
 			bcrypt.compare(req.body.password, user.password, (err, result) => {
@@ -78,9 +78,9 @@ router.post('/login', (req, res, next) => {
 						token: token,
 					});
 				} else {
-					return res.status(400).json({
+					return res.status(401).json({
 						error: err,
-						message: 'Password is incorrect',
+						message: 'Wrong Password. Please try again',
 					});
 				}
 			});
