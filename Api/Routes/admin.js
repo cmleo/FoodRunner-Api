@@ -57,18 +57,11 @@ router.post('/login', (req, res, next) => {
 		.exec()
 		.then((admin) => {
 			if (!admin) {
-				return res.status(400).json({
-					message: 'Email is incorrect',
+				return res.status(401).json({
+					message: 'Account with this email does not exist',
 				});
 			}
 			bcrypt.compare(req.body.password, admin.password, (err, result) => {
-				if (err) {
-					return res.status(400).json({
-						error: err,
-						message: 'Password is incorrect',
-					});
-				}
-
 				if (result) {
 					const token = jwt.sign(
 						{
@@ -84,6 +77,11 @@ router.post('/login', (req, res, next) => {
 					return res.status(200).json({
 						message: 'Auth successful',
 						token: token,
+					});
+				} else {
+					return res.status(401).json({
+						error: err,
+						message: 'Wrong Password. Please try again',
 					});
 				}
 			});
